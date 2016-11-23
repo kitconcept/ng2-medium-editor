@@ -9,8 +9,8 @@ import {
     Optional,
     OptionalMetadata,
     EventEmitter
-} from 'angular2/core';
-import {NgControl, ControlValueAccessor} from 'angular2/common';
+} from '@angular/core';
+import {NgControl, ControlValueAccessor} from '@angular/forms';
 
 /**
  * MediumEditor component
@@ -21,7 +21,7 @@ import {NgControl, ControlValueAccessor} from 'angular2/common';
     selector: 'meditor.editable',
     template: `<textarea #host></textarea>`
 })
-@Reflect.metadata('parameters', [null, [new OptionalMetadata()]])
+@Reflect.metadata('parameters', [null, [Optional()]])
 export class MediumContentEditor {
 
     @Input() config;
@@ -52,7 +52,7 @@ export class MediumContentEditor {
      */
     ngOnDestroy(){
         if( this.editor ) {
-            this.instance.removeAllListeners();
+            // this.instance.removeAllListeners();
             this.editor.destroy();
             this.editor = null;
         }
@@ -87,7 +87,7 @@ export class MediumContentEditor {
      */
     editorInit( config ){
 
-	this.editor = new MediumEditor(this.host._appElement.nativeElement, config);
+	this.editor = new MediumEditor(this.host.nativeElement, config);
 
 
 	        // Change event
@@ -122,7 +122,7 @@ export class MediumContentEditor {
      */
     writeValue(value){
         this.value = value;
-	
+
         if( this.editor ){
 		if(value && value != ""){
 			this.editor.elements[0].nextSibling.value=value;
